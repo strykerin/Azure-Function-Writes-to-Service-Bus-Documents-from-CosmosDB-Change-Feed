@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Microsoft.Azure.Documents;
 using Microsoft.Azure.WebJobs;
@@ -6,7 +5,7 @@ using Microsoft.Extensions.Logging;
 
 namespace AzureFunctions
 {
-    public class ServiceBusOutputBinding
+    public class CosmosDBTriggerServiceBusOutputBinding
     {
         [FunctionName("ServiceBusQueueTriggerCSharp")]
         [return: ServiceBus("queue1", Connection = "ServiceBusConnection")]
