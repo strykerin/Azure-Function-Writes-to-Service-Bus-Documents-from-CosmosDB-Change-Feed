@@ -1,15 +1,22 @@
 # Azure-Function-Writes-to-Service-Bus-Documents-from-CosmosDB-Change-Feed
 
-1st: 
+This repo contains two Azure Functions. One function is triggered by the CosmosDB Change Feed and the other is triggered by the Azure Service Bus.
 
-func init ServiceBusOutputFunction
+## Steps
+### 1st: 
 
-2nd:
+Create the Azure Function project by using the following command:
 
-Serve Bus Nuget Package
-dotnet add package Microsoft.Azure.WebJobs.Extensions.ServiceBus --version 4.2.0
+`func init ServiceBusOutputFunction`
 
-3rd:
+### 2nd:
 
-CosmosDB Nuget Package
-dotnet add package Microsoft.Azure.WebJobs.Extensions.CosmosDB --version 3.0.7
+Donwload the Nuget package for the Azure Service Bus: 
+
+`dotnet add package Microsoft.Azure.WebJobs.Extensions.ServiceBus --version 4.2.0`
+
+### 3rd:
+
+Download the Nuget package for the CosmosDB:
+
+`dotnet add package Microsoft.Azure.WebJobs.Extensions.CosmosDB --version 3.0.7`
