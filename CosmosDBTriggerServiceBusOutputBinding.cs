@@ -1,21 +1,22 @@
 using System;
+using System.Collections.Generic;
+using Microsoft.Azure.Documents;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
 
-namespace ServiceBusOutputBinding 
+namespace AzureFunctions
 {
-    [FunctionName("ServiceBusQueueTriggerCSharp")]
-    public static void Run(
-        [ServiceBusTrigger("myqueue", Connection = "ServiceBusConnection")]
-            string myQueueItem,
-                Int32 deliveryCount,
-                DateTime enqueuedTimeUtc,
-                string messageId,
-                ILogger log)
+    public class ServiceBusOutputBinding
     {
-        log.LogInformation($"C# ServiceBus queue trigger function processed message: {myQueueItem}");
-        log.LogInformation($"EnqueuedTimeUtc={enqueuedTimeUtc}");
-        log.LogInformation($"DeliveryCount={deliveryCount}");
-        log.LogInformation($"MessageId={messageId}");
+        [FunctionName("ServiceBusQueueTriggerCSharp")]
+        public static void Run([CosmosDBTrigger(
+            databaseName: "devdatabase",
+            collectionName: "bankotcexchange-transfero-collection",
+            ConnectionStringSetting= "CosmosDBConnection",
+            LeaseCollectionName = "leases",
+            LeaseCollectionPrefix = "ServiceBusOutput-")]IReadOnlyList<Document> documents,
+            ILogger log)
+        {
+        }
     }
 }
