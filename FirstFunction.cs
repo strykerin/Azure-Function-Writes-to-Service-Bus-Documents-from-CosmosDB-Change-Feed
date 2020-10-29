@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 
 namespace AzureFunctions
 {
-    public class CosmosDBTriggerServiceBusOutputBinding
+    public class FirstFunction
     {
         [FunctionName("ServiceBusQueueTriggerCSharp")]
         [return: ServiceBus("queue1", Connection = "ServiceBusConnection")]
