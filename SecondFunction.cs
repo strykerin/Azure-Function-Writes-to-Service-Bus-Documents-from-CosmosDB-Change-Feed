@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 
 namespace AzureFunctions
 {
-    public class ServiceBusQueueTriggerServiceBusTopicOutput
+    public class SecondFunction
     {
         [FunctionName("ServiceBusQueueTriggerServiceBusTopicOutput")]
         public static void Run([ServiceBusTrigger("queue1", Connection = "ServiceBusConnection")] 
