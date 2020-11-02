@@ -2,13 +2,16 @@ using System.Collections.Generic;
 using Microsoft.Azure.Documents;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
+using Microsoft.Azure.WebJobs.ServiceBus;
 
 namespace AzureFunctions
 {
     public class FirstFunction
     {
         [FunctionName("ServiceBusQueueTriggerCSharp")]
-        [return: ServiceBus("queue1", Connection = "ServiceBusConnection")]
+        [return: ServiceBus(queueOrTopicName: "queue1", 
+                            entityType: EntityType.Queue, 
+                            Connection = "ServiceBusConnection")]
         public static string Run([CosmosDBTrigger(
             databaseName: "devdatabase",
             collectionName: "bankotcexchange-transfero-collection",
