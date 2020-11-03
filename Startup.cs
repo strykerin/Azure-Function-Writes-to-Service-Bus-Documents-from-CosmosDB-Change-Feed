@@ -1,4 +1,5 @@
 ﻿using Microsoft.Azure.Functions.Extensions.DependencyInjection;
+using Microsoft.Azure.ServiceBus;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -23,6 +24,11 @@ namespace ServiceBusOutputFunction
                 .AddJsonFile("local.settings.json", optional: true, reloadOnChange: true);
             IConfiguration configuration = configBuilder.Build();
             builder.Services.AddSingleton(configuration);
+
+            // Add TopicClient to DI container
+            builder.Services.AddSingleton<ITopicClient, TopicClient>(config => 
+                                            new TopicClient(connectionString: configuration["ServiceBusConnection"], 
+                                                            entityPath: configuration["mytopic"]));
         }
     }
 }
