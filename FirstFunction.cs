@@ -3,22 +3,29 @@ using Microsoft.Azure.Documents;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
 using Microsoft.Azure.WebJobs.ServiceBus;
+using Microsoft.Azure.ServiceBus;
+using System.Threading.Tasks;
+using System.Text;
 
 namespace AzureFunctions
 {
     public class FirstFunction
     {
+        private readonly IQueueClient _queueClient;
+
+        public FirstFunction(IQueueClient queueClient)
+        {
+            _queueClient = queueClient;
+        }
+
         [FunctionName("FirstFunction")]
-        public static void Run(
+        public async Task Run(
             [CosmosDBTrigger(
                 databaseName: "devdatabase",
                 collectionName: "bankotcexchange-transfero-collection",
                 ConnectionStringSetting= "connectionString",
                 LeaseCollectionName = "leases",
                 LeaseCollectionPrefix = "ServiceBusOutput-")]IReadOnlyList<Document> documents,
-            [ServiceBus(queueOrTopicName: "queue1", 
-                        entityType: EntityType.Queue, 
-                        Connection = "ServiceBusConnection")] IAsyncCollector<string> output,
             ILogger log)
         {
             if (documents != null && documents.Count > 0)
@@ -26,11 +33,17 @@ namespace AzureFunctions
                 foreach (Document document in documents)
                 {
                     log.LogInformation($"DocumentId: {document.Id}");
-                    output.AddAsync(document.Id);
+                    await SendMessageAsync(document.Id);
                 }
             }
 
             return;
+        }
+
+        private async Task SendMessageAsync(string messageBody)
+        {
+            Message message = new Message(Encoding.UTF8.GetBytes(messageBody));
+            await _queueClient.SendAsync(message);
         }
     }
 }
