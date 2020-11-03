@@ -6,6 +6,8 @@ using Microsoft.Azure.WebJobs.ServiceBus;
 using Microsoft.Azure.ServiceBus;
 using System.Threading.Tasks;
 using System.Text;
+using ServiceBusOutputFunction;
+using System.Text.Json;
 
 namespace AzureFunctions
 {
@@ -32,8 +34,13 @@ namespace AzureFunctions
             {
                 foreach (Document document in documents)
                 {
-                    log.LogInformation($"DocumentId: {document.Id}");
-                    await SendMessageAsync(document.Id);
+                    Car car = JsonSerializer.Deserialize<Car>(document.ToString());
+
+                    if (car.Brand == "BMW")
+                    {
+                        log.LogInformation($"DocumentId: {document.Id}");
+                        await SendMessageAsync(document.Id);
+                    }
                 }
             }
 
