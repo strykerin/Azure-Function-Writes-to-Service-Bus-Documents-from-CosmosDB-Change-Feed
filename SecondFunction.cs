@@ -6,7 +6,7 @@ namespace AzureFunctions
 {
     public class SecondFunction
     {
-        [FunctionName("ServiceBusQueueTriggerServiceBusTopicOutput")]
+        [FunctionName("SecondFunction")]
         public static void Run([ServiceBusTrigger("queue1", Connection = "ServiceBusConnection")] 
                                     string myQueueItem,
                                     Int32 deliveryCount,

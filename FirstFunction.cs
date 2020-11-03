@@ -8,16 +8,17 @@ namespace AzureFunctions
 {
     public class FirstFunction
     {
-        [FunctionName("ServiceBusQueueTriggerCSharp")]
-        [return: ServiceBus(queueOrTopicName: "queue1", 
-                            entityType: EntityType.Queue, 
-                            Connection = "ServiceBusConnection")]
-        public static string Run([CosmosDBTrigger(
-            databaseName: "devdatabase",
-            collectionName: "bankotcexchange-transfero-collection",
-            ConnectionStringSetting= "CosmosDBConnection",
-            LeaseCollectionName = "leases",
-            LeaseCollectionPrefix = "ServiceBusOutput-")]IReadOnlyList<Document> documents,
+        [FunctionName("FirstFunction")]
+        public static void Run(
+            [CosmosDBTrigger(
+                databaseName: "devdatabase",
+                collectionName: "bankotcexchange-transfero-collection",
+                ConnectionStringSetting= "connectionString",
+                LeaseCollectionName = "leases",
+                LeaseCollectionPrefix = "ServiceBusOutput-")]IReadOnlyList<Document> documents,
+            [ServiceBus(queueOrTopicName: "queue1", 
+                        entityType: EntityType.Queue, 
+                        Connection = "ServiceBusConnection")] ICollector<string> output,
             ILogger log)
         {
             if (documents != null && documents.Count > 0)
@@ -25,10 +26,11 @@ namespace AzureFunctions
                 foreach (Document document in documents)
                 {
                     log.LogInformation($"DocumentId: {document.Id}");
+                    output.Add(document.Id);
                 }
             }
 
-            return documents[0].Id;
+            return;
         }
     }
 }
