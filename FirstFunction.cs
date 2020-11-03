@@ -18,7 +18,7 @@ namespace AzureFunctions
                 LeaseCollectionPrefix = "ServiceBusOutput-")]IReadOnlyList<Document> documents,
             [ServiceBus(queueOrTopicName: "queue1", 
                         entityType: EntityType.Queue, 
-                        Connection = "ServiceBusConnection")] ICollector<string> output,
+                        Connection = "ServiceBusConnection")] IAsyncCollector<string> output,
             ILogger log)
         {
             if (documents != null && documents.Count > 0)
@@ -26,7 +26,7 @@ namespace AzureFunctions
                 foreach (Document document in documents)
                 {
                     log.LogInformation($"DocumentId: {document.Id}");
-                    output.Add(document.Id);
+                    output.AddAsync(document.Id);
                 }
             }
 
