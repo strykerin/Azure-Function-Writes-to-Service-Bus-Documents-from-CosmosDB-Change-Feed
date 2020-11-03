@@ -25,10 +25,13 @@ namespace ServiceBusOutputFunction
             IConfiguration configuration = configBuilder.Build();
             builder.Services.AddSingleton(configuration);
 
-            // Add TopicClient to DI container
+            // Add QueueClient and TopicClient to DI container
             builder.Services.AddSingleton<ITopicClient, TopicClient>(config => 
                                             new TopicClient(connectionString: configuration["ServiceBusConnection"], 
                                                             entityPath: configuration["mytopic"]));
+            builder.Services.AddSingleton<IQueueClient, QueueClient>(config =>
+                                            new QueueClient(connectionString: configuration["ServiceBusConnection"],
+                                                            entityPath: configuration["queue1"]));
         }
     }
 }
