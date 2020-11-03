@@ -39,7 +39,7 @@ namespace AzureFunctions
                     if (car.Brand == "BMW")
                     {
                         log.LogInformation($"DocumentId: {document.Id}");
-                        await SendMessageAsync(document.Id);
+                        await SendMessageAsync(car);
                     }
                 }
             }
@@ -47,9 +47,11 @@ namespace AzureFunctions
             return;
         }
 
-        private async Task SendMessageAsync(string messageBody)
+        private async Task SendMessageAsync(Car car)
         {
+            string messageBody = JsonSerializer.Serialize(car);
             Message message = new Message(Encoding.UTF8.GetBytes(messageBody));
+            message.MessageId = car.Id; // We set the MessageId in order to detect duplicate messages in the Service Bus Queue
             await _queueClient.SendAsync(message);
         }
     }
