@@ -32,14 +32,14 @@ namespace ServiceBusOutputFunction
 
             Car car = JsonSerializer.Deserialize<Car>(message);
 
-            //var sendGridMessage = new SendGridMessage();
-            //sendGridMessage.From = new EmailAddress(_emailFrom);
-            //sendGridMessage.AddTo(email: _emailTo);
-            //sendGridMessage.PlainTextContent = $"The car has {car.Wheels} wheels";
-            //sendGridMessage.Subject = $"A new {car.Brand} car has arrived";
+            var sendGridMessage = new SendGridMessage();
+            sendGridMessage.From = new EmailAddress(_emailFrom);
+            sendGridMessage.AddTo(email: _emailTo);
+            sendGridMessage.PlainTextContent = $"The car has {car.Wheels} wheels";
+            sendGridMessage.Subject = $"A new {car.Brand} car has arrived";
 
-            //sender.Add(sendGridMessage);
-            //return;
+            sender.Add(sendGridMessage);
+            return;
         }
     }
 }
