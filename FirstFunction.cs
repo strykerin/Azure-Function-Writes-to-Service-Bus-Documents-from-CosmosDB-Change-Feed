@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using Microsoft.Azure.Documents;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
-using Microsoft.Azure.WebJobs.ServiceBus;
 using Microsoft.Azure.ServiceBus;
 using System.Threading.Tasks;
 using System.Text;
@@ -24,7 +23,7 @@ namespace AzureFunctions
         public async Task Run(
             [CosmosDBTrigger(
                 databaseName: "devdatabase",
-                collectionName: "bankotcexchange-transfero-collection",
+                collectionName: "devcontainer",
                 ConnectionStringSetting= "connectionString",
                 LeaseCollectionName = "leases",
                 LeaseCollectionPrefix = "ServiceBusOutput-")]IReadOnlyList<Document> documents,
