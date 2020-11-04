@@ -34,7 +34,7 @@ namespace AzureFunctions
 
             // Send string to Topic
             Car car = JsonSerializer.Deserialize<Car>(myQueueItem);
-            if (car?.Wheels == 4)
+            if (car?.Wheels >= 4)
             {
                 await SendMessageEmailLabelAsync(myQueueItem);
             }
