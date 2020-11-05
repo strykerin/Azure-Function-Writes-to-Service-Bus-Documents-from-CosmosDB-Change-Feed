@@ -1,7 +1,6 @@
 using System;
 using System.Text.Json;
 using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using SendGrid.Helpers.Mail;
