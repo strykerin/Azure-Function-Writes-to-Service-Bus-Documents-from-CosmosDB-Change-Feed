@@ -42,3 +42,6 @@ Download the Nuget package for the CosmosDB:
 https://docs.microsoft.com/en-us/azure/cosmos-db/introduction
 
 https://docs.microsoft.com/en-us/azure/cosmos-db/account-databases-containers-items
+
+Configuring host.json
+https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-service-bus-output?tabs=csharp#hostjson-settings
